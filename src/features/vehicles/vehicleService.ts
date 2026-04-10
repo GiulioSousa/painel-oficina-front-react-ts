@@ -10,14 +10,14 @@ export interface VehiclePayload {
 
 export const vehicleService = {
     list: async (page = 0, size = 20): Promise<VehiclePage> => {
-        const { data } = await api.get("/vehicles", {
+        const { data } = await api.get("/veiculos", {
             params: { page, size },
         })
         return data
     },
 
     create: async (payload: VehiclePayload): Promise<Vehicle> => {
-        const { data } = await api.post("/vehicles", payload)
+        const { data } = await api.post("/veiculos", payload)
         return data
     },
 

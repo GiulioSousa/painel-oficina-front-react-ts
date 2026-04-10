@@ -12,6 +12,8 @@ export function VehicleCard({ vehicle, onClick }: Props) {
         ? "#9CA3AF"
         : STATUS_ACCENT[vehicle.status]
 
+        const itemCount = vehicle.items?.length ?? 0
+
     return (
         <div
             onClick={onClick}
@@ -38,7 +40,7 @@ export function VehicleCard({ vehicle, onClick }: Props) {
                         {formatDate(vehicle.createdAt)}
                     </span>
                     <span className="text-[11px] text-gray-500">
-                        {vehicle.items.length > 0 ? (
+                        {itemCount > 0 ? (
                             <>
                                 <span className="font-medium text-gray-800">
                                     {vehicle.items.length}
