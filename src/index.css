@@ -1,44 +1,98 @@
 @import "tailwindcss";
 
 @theme {
-    --color-amber-50: #fffbeb;
-    --color-amber-100: #fef3c7;
-    --color-amber-700: #b45309;
-    --color-amber-800: #92400e;
-    --color-blue-50: #eff6ff;
-    --color-blue-100: #dbeafe;
-    --color-blue-700: #1d4ed8;
-    --color-blue-800: #1e40af;
-    --color-green-50: #f0fdf4;
-    --color-green-100: #dcfce7;
-    --color-green-700: #15803d;
-    --color-green-800: #065f46;
-    --color-gray-50: #f9fafb;
-    --color-gray-100: #f3f4f6;
-    --color-gray-200: #e5e7eb;
-    --color-gray-400: #9ca3af;
-    --color-gray-500: #6b7280;
-    --color-gray-600: #4b5563;
-    --color-gray-900: #111827;
-    --color-red-400: #f87171;
-    --color-red-500: #ef4444;
-    --color-white: #ffffff;
-    --color-black: #000000;
+  /* Texto */
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+
+  /* Superfícies */
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f9fafb;
+  --color-surface-raised: #f3f4f6;
+
+  /* Bordas */
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+
+  /* Status — pendente */
+  --color-pending-bg: #fef3c7;
+  --color-pending-text: #92400e;
+  --color-pending-accent: #f59e0b;
+  --color-pending-border: #fde68a;
+
+  /* Status — em espera */
+  --color-waiting-bg: #dbeafe;
+  --color-waiting-text: #1e40af;
+  --color-waiting-accent: #3b82f6;
+  --color-waiting-border: #bfdbfe;
+
+  /* Status — pronto */
+  --color-ready-bg: #d1fae5;
+  --color-ready-text: #065f46;
+  --color-ready-accent: #10b981;
+  --color-ready-border: #6ee7b7;
+
+  /* Status — entregue */
+  --color-delivered-bg: #f3f4f6;
+  --color-delivered-text: #374151;
+  --color-delivered-accent: #9ca3af;
+  --color-delivered-border: #e5e7eb;
+
+  /* Status — arquivado */
+  --color-archived-bg: #f3f4f6;
+  --color-archived-text: #6b7280;
+
+  /* Ação primária */
+  --color-action: #111827;
+  --color-action-text: #ffffff;
+
+  /* Feedback */
+  --color-error: #ef4444;
+  --color-error-border: #f87171;
 }
 
 @layer utilities {
-    .bg-amber-100 { background-color: #fef3c7; }
-    .bg-amber-50 { background-color: #fffbeb; }
-    .bg-blue-100 { background-color: #dbeafe; }
-    .bg-blue-50 { background-color: #eff6ff; }
-    .bg-green-100 { background-color: #dcfce7; }
-    .bg-green-50 { background-color: #f0fdf4; }
-    .text-amber-800 { color: #92400e; }
-    .text-amber-700 { color: #b45309; }
-    .text-blue-800 { color: #1e40af; }
-    .text-blue-700 { color: #1d4ed8; }
-    .text-green-800 { color: #065f46; }
-    .text-green-700 { color: #15803d; }
-    .border-amber-200 { border-color: #fde68a; }
-    .border-blue-200 { border-color: #bfdbfe; }
+  .bg-amber-100 {
+    background-color: #fef3c7;
   }
+  .bg-amber-50 {
+    background-color: #fffbeb;
+  }
+  .bg-blue-100 {
+    background-color: #dbeafe;
+  }
+  .bg-blue-50 {
+    background-color: #eff6ff;
+  }
+  .bg-green-100 {
+    background-color: #dcfce7;
+  }
+  .bg-green-50 {
+    background-color: #f0fdf4;
+  }
+  .text-amber-800 {
+    color: #92400e;
+  }
+  .text-amber-700 {
+    color: #b45309;
+  }
+  .text-blue-800 {
+    color: #1e40af;
+  }
+  .text-blue-700 {
+    color: #1d4ed8;
+  }
+  .text-green-800 {
+    color: #065f46;
+  }
+  .text-green-700 {
+    color: #15803d;
+  }
+  .border-amber-200 {
+    border-color: #fde68a;
+  }
+  .border-blue-200 {
+    border-color: #bfdbfe;
+  }
+}
