@@ -22,12 +22,12 @@ export const vehicleService = {
     },
 
     update: async (id: number, payload: VehiclePayload): Promise<Vehicle> => {
-        const { data } = await api.put(`/vehicles/${id}`, payload)
+        const { data } = await api.put(`/veiculos/${id}`, payload)
         return data
     },
 
     archive: async (id: number, archived: boolean): Promise<Vehicle> => {
-        const { data } = await api.patch(`/vehicles/${id}`, { archived })
+        const { data } = await api.patch(`/veiculos/${id}`, { archived })
         return data
     },
 }

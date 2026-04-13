@@ -54,7 +54,7 @@ export function VehicleModal({
                     descricao: vehicle.descricao,
                     status: vehicle.status,
                 })
-                setItems(vehicle.items.map((i) => ({ ...i })))
+                setItems(vehicle.items ? vehicle.items.map((i) => ({ ...i })) : [])
             } else {
                 reset({ placa: "", descricao: "", status: "PENDENTE" })
                 setItems([])

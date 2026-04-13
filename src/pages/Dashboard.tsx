@@ -7,7 +7,6 @@ import { FilterBar } from "@/components/FilterBar"
 import { Drawer } from "@/components/Drawer"
 import { FAB } from "@/components/FAB"
 import { useUiStore } from "@/store/uiStore"
-import type { Vehicle } from "@/features/vehicles/types"
 
 export function Dashboard() {
     const [drawerOpen, setDrawerOpen] = useState(false)
