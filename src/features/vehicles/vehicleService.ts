@@ -27,7 +27,7 @@ export const vehicleService = {
     },
 
     archive: async (id: number, archived: boolean): Promise<Vehicle> => {
-        const { data } = await api.patch(`/veiculos/${id}`, { archived })
+        const { data } = await api.patch(`/veiculos/${id}/arquivar`, { archived })
         return data
     },
 }
