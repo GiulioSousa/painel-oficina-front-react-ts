@@ -35,3 +35,11 @@ export function useArchiveVehicle() {
         onSuccess: () => queryClient.invalidateQueries({ queryKey: VEHICLES_KEY }),
     })
 }
+
+export function useVehicleDetail(id: number | null) {
+    return useQuery({
+        queryKey: ["vehicle", id],
+        queryFn: () => vehicleService.detail(id!),
+        enabled: !!id,
+    })
+}

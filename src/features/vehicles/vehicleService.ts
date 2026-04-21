@@ -5,7 +5,7 @@ export interface VehiclePayload {
     placa: string
     descricao: string
     status: string
-    items: { descricao: string; status: string }[]
+    itens: { descricao: string; status: string }[]
 }
 
 export const vehicleService = {
@@ -28,6 +28,11 @@ export const vehicleService = {
 
     archive: async (id: number, archived: boolean): Promise<Vehicle> => {
         const { data } = await api.patch(`/veiculos/${id}/arquivar`, { archived })
+        return data
+    },
+
+    detail: async (id: number): Promise<Vehicle> => {
+        const { data } = await api.get(`/veiculos/${id}/detalhe`)
         return data
     },
 }

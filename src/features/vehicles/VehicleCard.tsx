@@ -12,7 +12,7 @@ export function VehicleCard({ vehicle, onClick }: Props) {
         ? "#9CA3AF"
         : STATUS_ACCENT[vehicle.status]
 
-        const itemCount = vehicle.items?.length ?? 0
+        const itemCount = vehicle.totalItens ?? vehicle.itens?.length ?? 0
 
     return (
         <div
@@ -43,9 +43,9 @@ export function VehicleCard({ vehicle, onClick }: Props) {
                         {itemCount > 0 ? (
                             <>
                                 <span className="font-medium text-gray-800">
-                                    {vehicle.items.length}
+                                    {itemCount}
                                 </span>{" "}
-                                {vehicle.items.length === 1 ? "item" : "itens"}
+                                {itemCount === 1 ? "item" : "itens"}
                             </>
                         ) : (
                             "sem itens"

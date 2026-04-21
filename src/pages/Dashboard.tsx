@@ -1,5 +1,11 @@
 import { useState } from "react"
-import { useVehicles, useCreateVehicle, useUpdateVehicle, useArchiveVehicle } from "@/features/vehicles/useVehicles"
+import { 
+    useVehicles, 
+    useCreateVehicle, 
+    useUpdateVehicle, 
+    useArchiveVehicle,
+    useVehicleDetail 
+} from "@/features/vehicles/useVehicles"
 import { VehicleCard } from "@/features/vehicles/VehicleCard"
 import { VehicleModal } from "@/features/vehicles/VehicleModal"
 import { MetricCard } from "@/components/MetricCard"
@@ -26,6 +32,7 @@ export function Dashboard() {
     const createVehicle = useCreateVehicle()
     const updateVehicle = useUpdateVehicle()
     const archiveVehicle = useArchiveVehicle()
+    const { data: vehicleDetail } = useVehicleDetail(editingVehicleId)
 
     const vehicles = data?.content ?? []
 
@@ -40,16 +47,22 @@ export function Dashboard() {
         PRONTO: active.filter((v) => v.status === "PRONTO").length,
     }
 
-    const editingVehicle = vehicles.find((v) => v.id === editingVehicleId)
+    const editingVehicle = vehicleDetail /* ?? vehicles.find((v) => v.id === editingVehicleId) */
 
     function handleSave(data: any) {
+        const payload = {
+            placa: data.placa,
+            descricao: data.descricao,
+            status: data.status,
+            itens: data.itens ?? []
+        }
         if (editingVehicleId) {
             updateVehicle.mutate(
-                { id: editingVehicleId, payload: data },
+                { id: editingVehicleId, payload },
                 { onSuccess: () => setEditingVehicleId(null) }
             )
         } else {
-            createVehicle.mutate(data, {
+            createVehicle.mutate(payload, {
                 onSuccess: () => setIsNewModalOpen(false),
             })
         }

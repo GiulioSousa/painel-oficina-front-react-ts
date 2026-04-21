@@ -20,7 +20,7 @@ interface Props {
     open: boolean
     vehicle?: Vehicle
     onClose: () => void
-    onSave: (data: FormData & { items: Item[] }) => void
+    onSave: (data: FormData & { itens: Item[] }) => void
     onArchive?: () => void
     isSaving?: boolean
 }
@@ -33,7 +33,7 @@ export function VehicleModal({
     onArchive,
     isSaving,
 }: Props) {
-    const [items, setItems] = useState<Item[]>([])
+    const [itens, setItems] = useState<Item[]>([])
 
     const {
         register,
@@ -49,12 +49,15 @@ export function VehicleModal({
     useEffect(() => {
         if (open) {
             if (vehicle) {
+                console.log("vehicle detail:", vehicle)
+                const sourceItems = vehicle.itens ?? []
+                console.log("itens:", sourceItems)
+                setItems(sourceItems.map((i) => ({ ...i })))
                 reset({
                     placa: vehicle.placa,
                     descricao: vehicle.descricao,
                     status: vehicle.status,
                 })
-                setItems(vehicle.items ? vehicle.items.map((i) => ({ ...i })) : [])
             } else {
                 reset({ placa: "", descricao: "", status: "PENDENTE" })
                 setItems([])
@@ -83,7 +86,7 @@ export function VehicleModal({
     }
 
     function onSubmit(data: FormData) {
-        onSave({ ...data, items: items.filter((i) => i.descricao.trim()) })
+        onSave({ ...data, itens: itens.filter((i) => i.descricao.trim()) })
     }
 
     if (!open) return null
@@ -162,7 +165,7 @@ export function VehicleModal({
                                 Itens
                             </label>
                             <div className="space-y-2 mb-2">
-                                {items.map((item, i) => (
+                                {itens.map((item, i) => (
                                     <ItemRow
                                         key={i}
                                         index={i}

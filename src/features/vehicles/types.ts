@@ -13,7 +13,8 @@ export interface Vehicle {
     status: Status
     archived: boolean
     createdAt: string
-    items: Item[]
+    itens?: Item[]
+    totalItens?: number
 }
 
 export interface VehiclePage {
