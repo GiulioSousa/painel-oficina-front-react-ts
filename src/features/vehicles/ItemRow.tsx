@@ -2,13 +2,13 @@ import type { ItemStatus, ItemTipo } from "./types"
 
 const ITEM_STATUSES: ItemStatus[] = ["PENDENTE", "PRONTO"]
 const ITEM_TIPOS: { value: ItemTipo; label: string }[] = [
-    { value: "PECA", label: "Peça" },
+    { value: "PECA",    label: "Peça" },
     { value: "SERVICO", label: "Serviço" },
 ]
 
 const ITEM_STATUS_LABELS: Record<ItemStatus, string> = {
     PENDENTE: "Pendente",
-    PRONTO: "Pronto",
+    PRONTO:   "Pronto",
 }
 
 interface Props {
@@ -22,39 +22,58 @@ interface Props {
 
 export function ItemRow({ index, descricao, status, tipo, onChange, onRemove }: Props) {
     return (
-        <div className="flex flex-col gap-2 p-3 border border-gray-100 rounded-lg bg-gray-50">
+        <div
+            className="flex flex-col gap-2 p-3 rounded-lg"
+            style={{
+                background: "var(--bg)",
+                border: "0.5px solid var(--border)",
+            }}
+        >
             <input
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-900 focus:outline-none focus:border-gray-400"
+                className="w-full px-3 py-2 text-sm rounded-lg focus:outline-none"
+                style={{
+                    background:  "var(--bg2)",
+                    border:      "0.5px solid var(--border2)",
+                    color:       "var(--text)",
+                }}
                 placeholder="Descrição do item"
                 value={descricao}
                 onChange={(e) => onChange(index, "descricao", e.target.value)}
             />
             <div className="flex gap-2">
                 <select
-                    className="flex-1 px-2 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-900 focus:outline-none focus:border-gray-400"
+                    className="flex-1 px-2 py-2 text-sm rounded-lg focus:outline-none"
+                    style={{
+                        background: "var(--bg2)",
+                        border:     "0.5px solid var(--border2)",
+                        color:      "var(--text)",
+                    }}
                     value={tipo}
                     onChange={(e) => onChange(index, "tipo", e.target.value)}
                 >
                     {ITEM_TIPOS.map((t) => (
-                        <option key={t.value} value={t.value}>
-                            {t.label}
-                        </option>
+                        <option key={t.value} value={t.value}>{t.label}</option>
                     ))}
                 </select>
                 <select
-                    className="flex-1 px-2 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-900 focus:outline-none focus:border-gray-400"
+                    className="flex-1 px-2 py-2 text-sm rounded-lg focus:outline-none"
+                    style={{
+                        background: "var(--bg2)",
+                        border:     "0.5px solid var(--border2)",
+                        color:      "var(--text)",
+                    }}
                     value={status}
                     onChange={(e) => onChange(index, "status", e.target.value)}
                 >
                     {ITEM_STATUSES.map((s) => (
-                        <option key={s} value={s}>
-                            {ITEM_STATUS_LABELS[s]}
-                        </option>
+                        <option key={s} value={s}>{ITEM_STATUS_LABELS[s]}</option>
                     ))}
                 </select>
                 <button
+                    type="button"
                     onClick={() => onRemove(index)}
-                    className="text-gray-400 hover:text-gray-600 px-2 text-base"
+                    className="px-2 text-sm transition-colors"
+                    style={{ color: "var(--text3)" }}
                     aria-label="Remover item"
                 >
                     ✕

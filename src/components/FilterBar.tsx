@@ -26,10 +26,10 @@ export function FilterBar({
                         key={f.value}
                         onClick={() => onFilterChange(f.value)}
                         className={cn(
-                            "flex-shrink-0 px-3 py-1 rounded-full border text-xs",
+                            "flex-shrink-0 px-3 py-1 rounded-full border text-xs font-medium transition-colors",
                             active === f.value
-                                ? "bg-gray-900 text-white border-gray-900"
-                                : "bg-white text-gray-500 border-gray-200"
+                                ? "bg-[var(--color-brand-primary)] text-white border-[var(--color-brand-primary)]"
+                                : "bg-[var(--bg2)] text-[var(--text3)] border-[var(--border2)]"
                         )}
                     >
                         {f.label}
@@ -40,8 +40,10 @@ export function FilterBar({
             <button
                 onClick={onToggleArchived}
                 className={cn(
-                    "flex items-center gap-1.5 text-xs",
-                    showArchived ? "text-gray-900" : "text-gray-400"
+                    "flex items-center gap-1.5 text-xs transition-colors",
+                    showArchived 
+                        ? "text-[var(--color-brand-secondary)]" 
+                        : "text-[var(--text3)]" 
                 )}
             >
                 <svg

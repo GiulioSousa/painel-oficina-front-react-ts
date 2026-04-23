@@ -50,6 +50,7 @@ export function Dashboard() {
         PRONTO: active.filter((v) => v.status === "PRONTO").length,
     }
 
+    const isFilterActive = activeFilter !== "TODOS" || showArchived
     const editingVehicle = vehicleDetail /* ?? vehicles.find((v) => v.id === editingVehicleId) */
 
     function handleSave(data: any) {
@@ -114,34 +115,52 @@ export function Dashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen" style={{ background: "var(--bg)" }}>
             <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
 
-            <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
+            <div
+                className="px-4 py-3 flex items-center gap-3"
+                style={{
+                    background: "var(--color-brand-base)",
+                    boxShadow: "var(--shadow-topbar)"
+                }}>
                 <button
                     onClick={() => setDrawerOpen(true)}
                     className="flex flex-col gap-1 p-1"
                     aria-label="Menu"
                 >
-                    <span className="block w-4.5 h-px bg-gray-900 rounded" />
-                    <span className="block w-4.5 h-px bg-gray-900 rounded" />
-                    <span className="block w-4.5 h-px bg-gray-900 rounded" />
+                    <span className="block w-4.5 h-px rounded" style={{ background: "var(--color-brand-light)" }} />
+                    <span className="block w-4.5 h-px rounded" style={{ background: "var(--color-brand-light)" }} />
+                    <span className="block w-4.5 h-px rounded" style={{ background: "var(--color-brand-light)" }} />
                 </button>
-                <span className="text-[15px] font-medium text-gray-900">Dashboard</span>
+                <span
+                    className="text-[15px] font-medium flex-1"
+                    style={{ color: "var(--color-brand-light)" }}
+                >
+                    Dashboard
+                </span>
             </div>
 
             <div className="px-3.5 pt-4 pb-24 space-y-4">
                 <div className="grid grid-cols-2 gap-2.5">
-                    <MetricCard label="Pendente" value={counts.PENDENTE} valueClassName="text-amber-700" />
-                    <MetricCard label="Em espera" value={counts.EM_ESPERA} valueClassName="text-blue-700" />
-                    <div className="col-span-2 bg-gray-50 rounded-lg px-3 py-3 flex justify-between items-center">
+                    <MetricCard label="Pendente" value={counts.PENDENTE} status="pending" />
+                    <MetricCard label="Em espera" value={counts.EM_ESPERA} status="waiting" />
+                    <div
+                        className="col-span-2 rounded-xl px-3 py-3 flex justify-between items-center"
+                        style={{ background: "var(--bg2)", boxShadow: "var(--shadow-metric)" }}
+                    >
                         <div>
-                            <p className="text-[11px] text-gray-500 mb-1">Total ativos</p>
-                            <p className="text-[22px] font-medium text-gray-900">{active.length}</p>
+                            <p className="text-[11px] text-[var(--text3)] mb-1">Total ativos</p>
+                            <p className="text-[22px] font-medium text-[var(--text)]">{active.length}</p>
                         </div>
                         <div className="text-right">
-                            <p className="text-[11px] text-gray-500 mb-1">Pronto</p>
-                            <p className="text-[22px] font-medium text-green-700">{counts.PRONTO}</p>
+                            <p className="text-[11px] text-[var(--text3)] mb-1">Pronto</p>
+                            <p
+                                className="text-[22px] font-medium"
+                                style={{ color: "var(--color-ready-text)" }}
+                            >
+                                {counts.PRONTO}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -156,13 +175,34 @@ export function Dashboard() {
                 {isLoading ? (
                     <div className="space-y-3">
                         {[1, 2, 3].map((i) => (
-                            <div key={i} className="h-24 bg-gray-100 rounded-xl animate-pulse" />
+                            <div
+                                key={i}
+                                className="h-24 rounded-xl animate-pulse"
+                                style={{ background: "var(--bg2)", opacity: 0.6 }}
+                            />
                         ))}
                     </div>
                 ) : filtered.length === 0 ? (
-                    <p className="text-center text-sm text-gray-400 py-10">
-                        Nenhum veículo encontrado.
-                    </p>
+                    <div className="flex flex-col items-center justify-center py-16 gap-3">
+                        <svg
+                            width="40" height="40" viewBox="0 0 40 40"
+                            fill="none" stroke="var(--border2)" strokeWidth="1.5"
+                        >
+                            <rect x="6" y="12" width="28" height="22" rx="3" />
+                            <path d="M6 12l14-6 14 6" />
+                            <path d="M15 22h10" />
+                        </svg>
+                        <p className="text-sm font-medium text-[var(--text2)]">
+                            {isFilterActive
+                                ? "Nenhum veículo neste filtro"
+                                : "Nenhum veículo cadastrado"}
+                        </p>
+                        <p className="text-xs text-[var(--text3)] text-center max-w-[200px]">
+                            {isFilterActive
+                                ? "Tente outro filtro ou limpe a seleção atual"
+                                : "Toque no botão + para cadastrar o primeiro veículo"}
+                        </p>
+                    </div>
                 ) : (
                     <div className="space-y-2.5">
                         {filtered.map((v) => (

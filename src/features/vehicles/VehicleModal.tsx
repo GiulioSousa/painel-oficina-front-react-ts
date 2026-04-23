@@ -2,16 +2,16 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { cn, normalizePlate, STATUS_LABELS } from "@/lib/utils"
+import { normalizePlate, STATUS_LABELS } from "@/lib/utils"
 import { ItemRow } from "./ItemRow"
 import type { Item, VeiculoStatus, Vehicle } from "./types"
 
 const STATUSES: VeiculoStatus[] = ["PENDENTE", "EM_ESPERA", "PRONTO", "ENTREGUE"]
 
 const schema = z.object({
-    placa: z.string().min(1, "Placa obrigatória"),
+    placa:    z.string().min(1, "Placa obrigatória"),
     descricao: z.string().min(1, "Descrição obrigatória"),
-    status: z.enum(["PENDENTE", "EM_ESPERA", "PRONTO", "ENTREGUE"]),
+    status:   z.enum(["PENDENTE", "EM_ESPERA", "PRONTO", "ENTREGUE"]),
 })
 
 type FormData = z.infer<typeof schema>
@@ -25,14 +25,7 @@ interface Props {
     isSaving?: boolean
 }
 
-export function VehicleModal({
-    open,
-    vehicle,
-    onClose,
-    onSave,
-    onArchive,
-    isSaving,
-}: Props) {
+export function VehicleModal({ open, vehicle, onClose, onSave, onArchive, isSaving }: Props) {
     const [itens, setItems] = useState<Item[]>([])
 
     const {
@@ -49,13 +42,8 @@ export function VehicleModal({
     useEffect(() => {
         if (open) {
             if (vehicle) {
-                const sourceItems = vehicle.itens ?? []
-                setItems(sourceItems.map((i) => ({ ...i })))
-                reset({
-                    placa: vehicle.placa,
-                    descricao: vehicle.descricao,
-                    status: vehicle.status,
-                })
+                setItems((vehicle.itens ?? []).map((i) => ({ ...i })))
+                reset({ placa: vehicle.placa, descricao: vehicle.descricao, status: vehicle.status })
             } else {
                 reset({ placa: "", descricao: "", status: "PENDENTE" })
                 setItems([])
@@ -63,16 +51,8 @@ export function VehicleModal({
         }
     }, [open, vehicle, reset])
 
-    function handleItemChange(
-        index: number,
-        field: "descricao" | "status" | "tipo",
-        value: string
-    ) {
-        setItems((prev) =>
-            prev.map((item, i) =>
-                i === index ? { ...item, [field]: value } : item
-            )
-        )
+    function handleItemChange(index: number, field: "descricao" | "status" | "tipo", value: string) {
+        setItems((prev) => prev.map((item, i) => i === index ? { ...item, [field]: value } : item))
     }
 
     function handleItemRemove(index: number) {
@@ -91,78 +71,106 @@ export function VehicleModal({
 
     return (
         <div
-            className="fixed inset-0 bg-black/40 z-60 flex items-end"
+            className="fixed inset-0 z-60 flex items-end"
+            style={{ background: "rgba(10, 20, 35, 0.55)" }}
             onClick={(e) => e.target === e.currentTarget && onClose()}
         >
-            <div className="bg-white w-full rounded-t-[20px] max-h-[88vh] overflow-y-auto">
-                <div className="w-9 h-1 bg-gray-200 rounded-full mx-auto mt-2.5" />
+            <div
+                className="w-full rounded-t-[20px] max-h-[88vh] overflow-y-auto"
+                style={{
+                    background:           "rgba(255,255,255,0.92)",
+                    backdropFilter:       "blur(20px) saturate(1.6)",
+                    WebkitBackdropFilter: "blur(20px) saturate(1.6)",
+                    boxShadow:            "var(--shadow-sheet)",
+                }}
+            >
+                <div
+                    className="w-9 h-1 rounded-full mx-auto mt-3"
+                    style={{ background: "var(--border2)" }}
+                />
 
-                <div className="px-4 py-3.5 border-b border-gray-100">
-                    <p className="text-[15px] font-medium text-gray-900">
+                <div
+                    className="px-4 py-3.5"
+                    style={{ borderBottom: "0.5px solid var(--border)" }}
+                >
+                    <p className="text-[15px] font-semibold text-[var(--text)]">
                         {vehicle ? "Editar veículo" : "Novo veículo"}
                     </p>
                     {vehicle && (
-                        <p className="text-[13px] text-gray-400 font-mono mt-0.5">
+                        <p className="text-[13px] font-mono mt-0.5" style={{ color: "var(--text3)" }}>
                             {vehicle.placa}
                         </p>
                     )}
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="px-4 pb-8">
-                    <div className="mt-4 space-y-3">
-                        <div>
-                            <label className="text-[11px] uppercase tracking-wide text-gray-400 mb-2 block">
+                    <div className="mt-4 space-y-4">
+
+                        <div className="space-y-2.5">
+                            <label
+                                className="text-[11px] uppercase tracking-wide block"
+                                style={{ color: "var(--text2)" }}
+                            >
                                 Dados
                             </label>
+
                             <input
-                                className={cn(
-                                    "w-full px-3 py-2.5 text-sm border rounded-lg bg-white text-gray-900 focus:outline-none focus:border-gray-400 mb-2.5",
-                                    errors.placa ? "border-red-400" : "border-gray-200"
-                                )}
+                                className="w-full px-3 py-2.5 text-sm rounded-lg focus:outline-none transition-colors"
+                                style={{
+                                    background:  "var(--bg)",
+                                    border:      `0.5px solid ${errors.placa ? "var(--color-error)" : "var(--border2)"}`,
+                                    color:       "var(--text)",
+                                }}
                                 placeholder="Placa (ex: ABC-1234)"
                                 maxLength={8}
                                 {...register("placa")}
-                                onChange={(e) =>
-                                    setValue("placa", normalizePlate(e.target.value))
-                                }
+                                onChange={(e) => setValue("placa", normalizePlate(e.target.value))}
                             />
                             {errors.placa && (
-                                <p className="text-xs text-red-500 -mt-2 mb-2">
+                                <p className="text-xs -mt-1.5" style={{ color: "var(--color-error)" }}>
                                     {errors.placa.message}
                                 </p>
                             )}
 
                             <input
-                                className={cn(
-                                    "w-full px-3 py-2.5 text-sm border rounded-lg bg-white text-gray-900 focus:outline-none focus:border-gray-400 mb-2.5",
-                                    errors.descricao ? "border-red-400" : "border-gray-200"
-                                )}
+                                className="w-full px-3 py-2.5 text-sm rounded-lg focus:outline-none transition-colors"
+                                style={{
+                                    background: "var(--bg)",
+                                    border:     `0.5px solid ${errors.descricao ? "var(--color-error)" : "var(--border2)"}`,
+                                    color:      "var(--text)",
+                                }}
                                 placeholder="Descrição do veículo"
                                 {...register("descricao")}
                             />
                             {errors.descricao && (
-                                <p className="text-xs text-red-500 -mt-2 mb-2">
+                                <p className="text-xs -mt-1.5" style={{ color: "var(--color-error)" }}>
                                     {errors.descricao.message}
                                 </p>
                             )}
 
                             <select
-                                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-white text-gray-900 focus:outline-none focus:border-gray-400"
+                                className="w-full px-3 py-2.5 text-sm rounded-lg focus:outline-none"
+                                style={{
+                                    background: "var(--bg)",
+                                    border:     "0.5px solid var(--border2)",
+                                    color:      "var(--text)",
+                                }}
                                 {...register("status")}
                             >
                                 {STATUSES.map((s) => (
-                                    <option key={s} value={s}>
-                                        {STATUS_LABELS[s]}
-                                    </option>
+                                    <option key={s} value={s}>{STATUS_LABELS[s]}</option>
                                 ))}
                             </select>
                         </div>
 
-                        <div>
-                            <label className="text-[11px] uppercase tracking-wide text-gray-400 mb-2 block">
+                        <div className="space-y-2">
+                            <label
+                                className="text-[11px] uppercase tracking-wide block"
+                                style={{ color: "var(--text2)" }}
+                            >
                                 Itens
                             </label>
-                            <div className="space-y-2 mb-2">
+                            <div className="space-y-2">
                                 {itens.map((item, i) => (
                                     <ItemRow
                                         key={i}
@@ -178,18 +186,28 @@ export function VehicleModal({
                             <button
                                 type="button"
                                 onClick={handleAddItem}
-                                className="w-full py-2.5 text-sm border border-dashed border-gray-200 rounded-lg text-gray-400 hover:bg-gray-50"
+                                className="w-full py-2.5 text-sm rounded-lg transition-colors"
+                                style={{
+                                    border:  "0.5px dashed var(--border2)",
+                                    color:   "var(--text3)",
+                                    background: "transparent",
+                                }}
                             >
                                 + Adicionar item
                             </button>
                         </div>
                     </div>
 
-                    <div className="mt-4 space-y-2">
+                    <div className="mt-5 space-y-2">
                         <button
                             type="submit"
                             disabled={isSaving}
-                            className="w-full py-3 bg-gray-900 text-white text-sm font-medium rounded-lg disabled:opacity-50"
+                            className="w-full py-3 text-sm font-semibold rounded-lg disabled:opacity-50 transition-opacity"
+                            style={{
+                                background: "var(--color-brand-primary)",
+                                color:      "#ffffff",
+                                boxShadow:  "0 4px 14px rgba(230,57,70,0.3)",
+                            }}
                         >
                             {isSaving ? "Salvando..." : "Salvar"}
                         </button>
@@ -198,12 +216,16 @@ export function VehicleModal({
                             <button
                                 type="button"
                                 onClick={onArchive}
-                                className={cn(
-                                    "w-full py-3 text-sm font-medium rounded-lg border",
-                                    vehicle.archived
-                                        ? "bg-blue-50 text-blue-800 border-blue-200"
-                                        : "bg-amber-50 text-amber-800 border-amber-200"
-                                )}
+                                className="w-full py-3 text-sm font-medium rounded-lg transition-colors"
+                                style={vehicle.archived ? {
+                                    background: "var(--color-waiting-bg)",
+                                    color:      "var(--color-waiting-text)",
+                                    border:     "0.5px solid var(--color-waiting-border)",
+                                } : {
+                                    background: "var(--color-pending-bg)",
+                                    color:      "var(--color-pending-text)",
+                                    border:     "0.5px solid var(--color-pending-border)",
+                                }}
                             >
                                 {vehicle.archived ? "Desarquivar" : "Arquivar"}
                             </button>
@@ -212,7 +234,11 @@ export function VehicleModal({
                         <button
                             type="button"
                             onClick={onClose}
-                            className="w-full py-3 bg-gray-50 text-gray-500 text-sm rounded-lg"
+                            className="w-full py-3 text-sm rounded-lg transition-colors"
+                            style={{
+                                background: "var(--bg)",
+                                color:      "var(--text3)",
+                            }}
                         >
                             Cancelar
                         </button>
