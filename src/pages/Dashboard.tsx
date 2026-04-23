@@ -1,10 +1,11 @@
+import { useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
-import { 
-    useVehicles, 
-    useCreateVehicle, 
-    useUpdateVehicle, 
+import {
+    useVehicles,
+    useCreateVehicle,
+    useUpdateVehicle,
     useArchiveVehicle,
-    useVehicleDetail 
+    useVehicleDetail
 } from "@/features/vehicles/useVehicles"
 import { VehicleCard } from "@/features/vehicles/VehicleCard"
 import { VehicleModal } from "@/features/vehicles/VehicleModal"
@@ -13,6 +14,7 @@ import { FilterBar } from "@/components/FilterBar"
 import { Drawer } from "@/components/Drawer"
 import { FAB } from "@/components/FAB"
 import { useUiStore } from "@/store/uiStore"
+import { vehicleService } from "@/features/vehicles/vehicleService"
 
 export function Dashboard() {
     const [drawerOpen, setDrawerOpen] = useState(false)
@@ -28,6 +30,7 @@ export function Dashboard() {
         setIsNewModalOpen,
     } = useUiStore()
 
+    const queryClient = useQueryClient()
     const { data, isLoading } = useVehicles()
     const createVehicle = useCreateVehicle()
     const updateVehicle = useUpdateVehicle()
@@ -57,9 +60,43 @@ export function Dashboard() {
             itens: data.itens ?? []
         }
         if (editingVehicleId) {
+            const originalItems = vehicleDetail?.itens ?? []
+            const newItems = data.itens ?? []
+
+            const toCreate = newItems.filter((i: any) => !i.id)
+            const toUpdate = newItems.filter((i: any) => i.id)
+            const toDelete = originalItems.filter(
+                (o) => !newItems.find((n: any) => n.id === o.id)
+            )
+
             updateVehicle.mutate(
                 { id: editingVehicleId, payload },
-                { onSuccess: () => setEditingVehicleId(null) }
+                {
+                    onSuccess: async () => {
+                        await Promise.all([
+                            ...toCreate.map((i: any) =>
+                                vehicleService.addItem(editingVehicleId, {
+                                    descricao: i.descricao,
+                                    tipo: i.tipo
+                                })
+                            ),
+                            ...toUpdate.map(async (i: any) => {
+                                await vehicleService.updateItem(i.id, {
+                                    descricao: i.descricao,
+                                    tipo: i.tipo,
+                                })
+                                const original = originalItems.find((o) => o.id === i.id)
+                                if (original && original.status !== i.status) {
+                                    await vehicleService.updateItemStatus(i.id, i.status)
+                                }
+                            }),
+                            ...toDelete.map((i) => vehicleService.deleteItem(i.id!)),
+                        ])
+                        queryClient.invalidateQueries({ queryKey: ["vehicles"] })
+                        queryClient.invalidateQueries({ queryKey: ["vehicle", editingVehicleId] })
+                        setEditingVehicleId(null)
+                    },
+                }
             )
         } else {
             createVehicle.mutate(payload, {
