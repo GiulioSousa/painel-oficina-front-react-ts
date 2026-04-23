@@ -1,16 +1,19 @@
-export type Status = "PENDENTE" | "EM_ESPERA" | "PRONTO" | "ENTREGUE"
+export type VeiculoStatus = "PENDENTE" | "EM_ESPERA" | "PRONTO" | "ENTREGUE"
+export type ItemTipo = "PECA" | "SERVICO"
+export type ItemStatus = "PENDENTE" | "PRONTO"
 
 export interface Item {
     id?: number
     descricao: string
-    status: Status
+    tipo: ItemTipo
+    status: ItemStatus
 }
 
 export interface Vehicle {
     id: number
     placa: string
     descricao: string
-    status: Status
+    status: VeiculoStatus
     archived: boolean
     createdAt: string
     itens?: Item[]

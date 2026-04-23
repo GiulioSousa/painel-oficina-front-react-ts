@@ -1,11 +1,16 @@
 import api from "@/lib/api"
-import type { Vehicle, VehiclePage } from "./types"
+import type { Item, Vehicle, VehiclePage } from "./types"
 
 export interface VehiclePayload {
     placa: string
     descricao: string
     status: string
     itens: { descricao: string; status: string }[]
+}
+
+export interface ItemPayload {
+    descricao: string
+    tipo: string
 }
 
 export const vehicleService = {
@@ -34,5 +39,26 @@ export const vehicleService = {
     detail: async (id: number): Promise<Vehicle> => {
         const { data } = await api.get(`/veiculos/${id}/detalhe`)
         return data
+    },
+
+    addItem: async (veiculoId: number, payload: ItemPayload): Promise<Item> => {
+        const { data } = await api.post(`/itens/veiculo/${veiculoId}`, payload)
+        return data
+    },
+
+    updateItem: async (id: number, payload: ItemPayload): Promise<Item> => {
+        const { data } = await api.patch(`/itens/${id}`, payload)
+        return data
+    },
+
+    updateItemStatus: async (id: number, status: string): Promise<Item> => {
+        const { data } = await api.patch(`/itens/${id}/status`, null, {
+            params: { status },
+        })
+        return data
+    },
+
+    deleteItem: async (id: number): Promise<void> => {
+        await api.delete(`/itens/${id}`)
     },
 }

@@ -4,9 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { cn, normalizePlate, STATUS_LABELS } from "@/lib/utils"
 import { ItemRow } from "./ItemRow"
-import type { Item, Status, Vehicle } from "./types"
+import type { Item, VeiculoStatus, Vehicle } from "./types"
 
-const STATUSES: Status[] = ["PENDENTE", "EM_ESPERA", "PRONTO", "ENTREGUE"]
+const STATUSES: VeiculoStatus[] = ["PENDENTE", "EM_ESPERA", "PRONTO", "ENTREGUE"]
 
 const schema = z.object({
     placa: z.string().min(1, "Placa obrigatória"),
@@ -49,9 +49,7 @@ export function VehicleModal({
     useEffect(() => {
         if (open) {
             if (vehicle) {
-                console.log("vehicle detail:", vehicle)
                 const sourceItems = vehicle.itens ?? []
-                console.log("itens:", sourceItems)
                 setItems(sourceItems.map((i) => ({ ...i })))
                 reset({
                     placa: vehicle.placa,
@@ -67,7 +65,7 @@ export function VehicleModal({
 
     function handleItemChange(
         index: number,
-        field: "descricao" | "status",
+        field: "descricao" | "status" | "tipo",
         value: string
     ) {
         setItems((prev) =>
@@ -82,7 +80,7 @@ export function VehicleModal({
     }
 
     function handleAddItem() {
-        setItems((prev) => [...prev, { descricao: "", status: "PENDENTE" }])
+        setItems((prev) => [...prev, { descricao: "", status: "PENDENTE", tipo: "PECA" }])
     }
 
     function onSubmit(data: FormData) {
@@ -170,6 +168,7 @@ export function VehicleModal({
                                         key={i}
                                         index={i}
                                         descricao={item.descricao}
+                                        tipo={item.tipo}
                                         status={item.status}
                                         onChange={handleItemChange}
                                         onRemove={handleItemRemove}
