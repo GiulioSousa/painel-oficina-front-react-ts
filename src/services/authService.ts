@@ -1,6 +1,10 @@
 import api from "@/lib/api"
 
 export const authService = {
+    me: async (): Promise<void> => {
+        await api.get("/auth/me")
+    },
+    
     login: async (
         username:string,
         password:string 

@@ -2,11 +2,11 @@ import {
     createContext,
     useContext,
     useState,
+    useEffect,
     useCallback,
     type ReactNode,
 } from "react"
 import { authService } from "@/services/authService"
-
 interface AuthContextValue {
     isAuthenticated: boolean
     isLoading: boolean
@@ -18,7 +18,14 @@ const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        authService.me()
+            .then(() => setIsAuthenticated(true))
+            .catch(() => setIsAuthenticated(false))
+            .finally(() => setIsLoading(false))
+    }, [])
 
     const login = useCallback(async (username: string, password: string) => {
         setIsLoading(true)
@@ -34,6 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await authService.logout()
         setIsAuthenticated(false)
     }, [])
+
+    if (isLoading) return null
 
     return (
         <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
