@@ -1,8 +1,8 @@
 import { cn, STATUS_BADGE, STATUS_LABELS } from "@/lib/utils"
-import type { Status } from "@/features/vehicles/types"
+import type { VeiculoStatus } from "@/features/vehicles/types"
 
 interface Props {
-    status: Status
+    status: VeiculoStatus
     archived?: boolean
 }
 

@@ -13,6 +13,7 @@
     "@types/node": "^25.5.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.4.27",
     "postcss": "^8.5.9",
@@ -29,6 +30,7 @@
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-hook-form": "^7.72.1",
+    "react-router-dom": "^7.14.2",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.3.6",
     "zustand": "^5.0.12"
