@@ -48,6 +48,10 @@ export function Dashboard() {
         PENDENTE: active.filter((v) => v.status === "PENDENTE").length,
         EM_ESPERA: active.filter((v) => v.status === "EM_ESPERA").length,
         PRONTO: active.filter((v) => v.status === "PRONTO").length,
+        TOTAL_ATIVOS: 
+            active.filter((v) => v.status ==="PENDENTE").length +
+            active.filter((v) => v.status ==="EM_ESPERA").length +
+            active.filter((v) => v.status ==="PRONTO").length 
     }
 
     const isFilterActive = activeFilter !== "TODOS" || showArchived

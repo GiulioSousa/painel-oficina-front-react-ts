@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import type { VeiculoStatus as Status } from "@/features/vehicles/types"
+import type { VeiculoStatus } from "@/features/vehicles/types"
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
@@ -18,39 +18,23 @@ export function normalizePlate(value: string): string {
     return value.toUpperCase().replace(/[^A-Z0-9-]/g, "")
 }
 
-export const STATUS_LABELS: Record<Status, string> = {
+export const STATUS_LABELS: Record<VeiculoStatus, string> = {
     PENDENTE: "Pendente",
     EM_ESPERA: "Em espera",
     PRONTO: "Pronto",
     ENTREGUE: "Entregue",
 }
 
-export const STATUS_ACCENT: Record<Status, string> = {
-    PENDENTE: "var(--color-pending-accent)",
-    EM_ESPERA: "var(--color-waiting-accent)",
-    PRONTO: "var(--color-ready-accent)",
-    ENTREGUE: "var(--color-delivered-accent)",
+export const STATUS_ACCENT: Record<VeiculoStatus, string> = {
+    PENDENTE: "#F59E0B",
+    EM_ESPERA: "#3B82F6",
+    PRONTO: "#10B981",
+    ENTREGUE: "#9CA3AF",
 }
 
-export const STATUS_BADGE: Record<Status, { bg: string; text: string; border: string }> = {
-    PENDENTE: { 
-        bg: "bg-pending-bg", 
-        text: "text-pending-text",
-        border: "border-pending-border"
-    },
-    EM_ESPERA: { 
-        bg: "bg-waiting-bg", 
-        text: "text-waiting-text", 
-        border: "border-waiting-border"
-    },
-    PRONTO: { 
-        bg: "bg-ready-bg", 
-        text: "text-ready-text", 
-        border: "border-ready-border"
-    },
-    ENTREGUE: { 
-        bg:     "bg-delivered-bg",
-        text:   "text-delivered-text",
-        border: "border-delivered-border",
-    },
+export const STATUS_BADGE: Record<VeiculoStatus, { bg: string; text: string }> = {
+    PENDENTE: { bg: "bg-amber-100", text: "text-amber-800" },
+    EM_ESPERA: { bg: "bg-blue-100", text: "text-blue-800" },
+    PRONTO: { bg: "bg-green-100", text: "text-green-800" },
+    ENTREGUE: { bg: "bg-gray-100", text: "text-gray-600" },
 }
