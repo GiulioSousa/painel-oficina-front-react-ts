@@ -48,6 +48,10 @@ export function Dashboard() {
         PENDENTE: active.filter((v) => v.status === "PENDENTE").length,
         EM_ESPERA: active.filter((v) => v.status === "EM_ESPERA").length,
         PRONTO: active.filter((v) => v.status === "PRONTO").length,
+        TOTAL_ATIVOS: 
+            active.filter((v) => v.status ==="PENDENTE").length +
+            active.filter((v) => v.status ==="EM_ESPERA").length +
+            active.filter((v) => v.status ==="PRONTO").length 
     }
 
     const editingVehicle = vehicleDetail /* ?? vehicles.find((v) => v.id === editingVehicleId) */
@@ -114,7 +118,7 @@ export function Dashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg--dark">
             <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
 
             <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
@@ -134,16 +138,8 @@ export function Dashboard() {
                 <div className="grid grid-cols-2 gap-2.5">
                     <MetricCard label="Pendente" value={counts.PENDENTE} valueClassName="text-amber-700" />
                     <MetricCard label="Em espera" value={counts.EM_ESPERA} valueClassName="text-blue-700" />
-                    <div className="col-span-2 bg-gray-50 rounded-lg px-3 py-3 flex justify-between items-center">
-                        <div>
-                            <p className="text-[11px] text-gray-500 mb-1">Total ativos</p>
-                            <p className="text-[22px] font-medium text-gray-900">{active.length}</p>
-                        </div>
-                        <div className="text-right">
-                            <p className="text-[11px] text-gray-500 mb-1">Pronto</p>
-                            <p className="text-[22px] font-medium text-green-700">{counts.PRONTO}</p>
-                        </div>
-                    </div>
+                    <MetricCard label="Pronto" value={counts.PRONTO} valueClassName="text-green-700" />
+                    <MetricCard label="Total Ativos" value={counts.TOTAL_ATIVOS} valueClassName="text-black-700" />
                 </div>
 
                 <FilterBar
