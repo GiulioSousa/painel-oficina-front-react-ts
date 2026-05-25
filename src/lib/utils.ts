@@ -32,9 +32,9 @@ export const STATUS_ACCENT: Record<VeiculoStatus, string> = {
     ENTREGUE: "#9CA3AF",
 }
 
-export const STATUS_BADGE: Record<VeiculoStatus, { bg: string; text: string }> = {
-    PENDENTE: { bg: "bg-amber-100", text: "text-amber-800" },
-    EM_ESPERA: { bg: "bg-blue-100", text: "text-blue-800" },
-    PRONTO: { bg: "bg-green-100", text: "text-green-800" },
-    ENTREGUE: { bg: "bg-gray-100", text: "text-gray-600" },
+export const STATUS_BADGE: Record<VeiculoStatus, { bg: string; text: string; border: string }> = {
+    PENDENTE: { bg: "bg-amber-100", text: "text-amber-800", border: "border-amber-300" },
+    EM_ESPERA: { bg: "bg-blue-100", text: "text-blue-800", border: "border-blue-300" },
+    PRONTO: { bg: "bg-green-100", text: "text-green-800", border: "border-green-300" },
+    ENTREGUE: { bg: "bg-gray-100", text: "text-gray-600", border: "border-gray-300" },
 }
