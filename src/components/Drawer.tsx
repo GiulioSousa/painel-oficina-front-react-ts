@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import { useUiStore } from "@/store/uiStore"
+import logoDrawer from "@/assets/logo-drawer.png"
 
 interface Props {
     open: boolean
@@ -17,7 +18,7 @@ export function Drawer({ open, onClose }: Props) {
                     "fixed inset-0 z-50 transition-opacity",
                     open ? "opacity-100" : "opacity-0 pointer-events-none"
                 )}
-                style={{ background: "rgba(10, 20, 35, 0.55)" }}
+                style={{ background: "rgba(10, 10, 10, 0.55)" }}
                 onClick={onClose}
             />
 
@@ -35,32 +36,23 @@ export function Drawer({ open, onClose }: Props) {
                 }}
             >
                 <div
-                    className="px-5 pb-5 mb-3"
+                    className="px-5 pb-5 mb-3 flex items-center justify-center"
                     style={{ borderBottom: "0.5px solid var(--border)" }}
                 >
-                    <div className="flex items-center gap-2.5 mb-1">
-                        <div
-                            className="w-7 h-7 rounded-lg flex-shrink-0"
-                            style={{
-                                background: "var(--color-brand-primary)",
-                                boxShadow:  "0 2px 8px rgba(230,57,70,0.35)",
-                            }}
-                        />
-                        <p className="text-[15px] font-semibold" style={{ color: "var(--text)" }}>
-                            Oficina
-                        </p>
-                    </div>
-                    <p className="text-[11px] mt-0.5 pl-9" style={{ color: "var(--text3)" }}>
-                        sistema de gestão
-                    </p>
+                    <img
+                        src={logoDrawer}
+                        alt="Oficina Garagem"
+                        className="w-24 mx-auto block select-none"
+                        draggable={false}
+                    />
                 </div>
 
                 <nav className="flex flex-col flex-1">
                     <button
                         className="flex items-center gap-2.5 px-5 py-2.5 text-sm font-medium transition-colors"
                         style={{
-                            color:      "var(--color-brand-primary)",
-                            background: "rgba(230,57,70,0.08)",
+                            color:      "var(--color-brand-secondary)",
+                            background: "rgba(69, 123, 157, 0.08)",
                         }}
                     >
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -70,28 +62,6 @@ export function Drawer({ open, onClose }: Props) {
                             <rect x="9" y="9" width="6" height="6" rx="1" />
                         </svg>
                         Dashboard
-                    </button>
-
-                    <button
-                        className="flex items-center gap-2.5 px-5 py-2.5 text-sm transition-colors"
-                        style={{ color: "var(--text3)" }}
-                    >
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <rect x="1" y="3" width="14" height="11" rx="1" />
-                            <path d="M5 3V2M11 3V2" />
-                        </svg>
-                        Veículos
-                    </button>
-
-                    <button
-                        className="flex items-center gap-2.5 px-5 py-2.5 text-sm transition-colors"
-                        style={{ color: "var(--text3)" }}
-                    >
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <circle cx="8" cy="8" r="6" />
-                            <path d="M8 5v3l2 2" />
-                        </svg>
-                        Manutenções
                     </button>
 
                     <div className="mt-auto px-5 py-4" style={{ borderTop: "0.5px solid var(--border)" }}>

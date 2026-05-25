@@ -78,7 +78,7 @@ export function VehicleModal({ open, vehicle, onClose, onSave, onArchive, isSavi
             <div
                 className="w-full rounded-t-[20px] max-h-[88vh] overflow-y-auto"
                 style={{
-                    background:           "rgba(255,255,255,0.92)",
+                    background:           "var(--bg)",
                     backdropFilter:       "blur(20px) saturate(1.6)",
                     WebkitBackdropFilter: "blur(20px) saturate(1.6)",
                     boxShadow:            "var(--shadow-sheet)",

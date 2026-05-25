@@ -6,29 +6,35 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 
   /* Paleta de marca */
-  --color-brand-primary: #E63946;
+  --color-brand-primary: #000088;
   --color-brand-secondary: #457B9D;
   --color-brand-accent: #A8DADC;
   --color-brand-base: #1D3557;
   --color-brand-light: #F1FAEE;
 
   /* Status — pendente */
+  /* --color-pending-accent: #f39c12; */
   --color-pending-accent: #f39c12;
   --color-pending-bg: rgba(243, 156, 18, 0.13);
-  --color-pending-text: #7a5100;
+  --color-pending-text: #f39c12;
   --color-pending-border: rgba(243, 156, 18, 0.3);
 
   /* Status — em espera */
   --color-waiting-accent: #457B9D;
   --color-waiting-bg: rgba(69, 123, 157, 0.15);
-  --color-waiting-text: #1D3557;
+  --color-waiting-text: #457B9D;
   --color-waiting-border: rgba(69, 123, 157, 0.3);
 
   /* Status — pronto */
   --color-ready-accent: #2ecc71;
   --color-ready-bg: rgba(46, 204, 113, 0.13);
-  --color-ready-text: #1a7a45;
+  --color-ready-text: #2ecc71;
   --color-ready-border: rgba(46, 204, 113, 0.3);
+
+  /* Status — total ativos */
+  --color-total-active-accent: #00DDAA;
+  --color-total-active-bg: rgba(29, 53, 87, 0.1);
+  --color-total-active-text: #00DDAA;
 
   /* Status — entregue */
   --color-delivered-accent: #9ca3af;
