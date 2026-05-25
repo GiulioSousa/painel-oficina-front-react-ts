@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "@/contexts/AuthContext"
+import logoLogin from "../assets/logo-login.png"
 
 export function Login() {
     const { login, isLoading } = useAuth()
@@ -18,23 +19,25 @@ export function Login() {
         try {
             await login(username, password)
             navigate("/", { replace: true })
-            } catch {
+        } catch {
             setError("Usuário ou senha inválidos.")
         }
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="min-h-screen bg-black flex items-center justify-center px-4">
             <div className="w-full max-w-sm">
 
-                {/* Header */}
-                <div className="text-center mb-8">
-                    <p className="text-[15px] font-medium text-gray-900">Oficina</p>
-                    <p className="text-[11px] text-gray-400 mt-0.5">sistema de gestão</p>
-                </div>
+                {/* Logo */}
+                <img
+                    src={logoLogin}
+                    alt="Oficina Garagem Thiago Brozonga"
+                    className="w-48 mb-6 select-none mx-auto block"
+                    draggable={false}
+                />
 
                 {/* Card */}
-                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                <div className="w-full max-w-sm bg-white rounded-xl border border-gray-200 overflow-hidden">
                     <div style={{ height: 3, background: "#E63946" }} />
 
                     <div className="px-5 py-6 space-y-4">
