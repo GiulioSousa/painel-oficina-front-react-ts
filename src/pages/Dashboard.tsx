@@ -149,24 +149,8 @@ export function Dashboard() {
                 <div className="grid grid-cols-2 gap-2.5">
                     <MetricCard label="Pendente" value={counts.PENDENTE} status="pending" />
                     <MetricCard label="Em espera" value={counts.EM_ESPERA} status="waiting" />
-                    <div
-                        className="col-span-2 rounded-xl px-3 py-3 flex justify-between items-center"
-                        style={{ background: "var(--bg2)", boxShadow: "var(--shadow-metric)" }}
-                    >
-                        <div>
-                            <p className="text-[11px] text-[var(--text3)] mb-1">Total ativos</p>
-                            <p className="text-[22px] font-medium text-[var(--text)]">{active.length}</p>
-                        </div>
-                        <div className="text-right">
-                            <p className="text-[11px] text-[var(--text3)] mb-1">Pronto</p>
-                            <p
-                                className="text-[22px] font-medium"
-                                style={{ color: "var(--color-ready-text)" }}
-                            >
-                                {counts.PRONTO}
-                            </p>
-                        </div>
-                    </div>
+                    <MetricCard label="Pronto" value={counts.PRONTO} status="ready" />
+                    <MetricCard label="Total ativos" value={counts.TOTAL_ATIVOS} status="totalActive" />
                 </div>
 
                 <FilterBar

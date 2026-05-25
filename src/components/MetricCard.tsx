@@ -1,4 +1,4 @@
-type StatusKey = "pending" | "waiting" | "ready"
+type StatusKey = "pending" | "waiting" | "ready" | "totalActive"
 
 interface Props {
     label: string
@@ -10,6 +10,7 @@ const VALUE_COLORS: { [K in StatusKey]: string} = {
     pending: "text-[var(--color-pending-text)]",
     waiting: "text-[var(--color-waiting-text)]",
     ready: "text-[var(--color-ready-text)]",
+    totalActive: "text-[var(--color-total-active-text)]"
 }
 
 export function MetricCard({ label, value, status }: Props) {
