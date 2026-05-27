@@ -15,9 +15,11 @@ import { Drawer } from "@/components/Drawer"
 import { FAB } from "@/components/FAB"
 import { useUiStore } from "@/store/uiStore"
 import { vehicleService } from "@/features/vehicles/vehicleService"
+import { ChangePasswordModal } from "@/components/ChangePasswordModal"
 
 export function Dashboard() {
     const [drawerOpen, setDrawerOpen] = useState(false)
+    const [changePasswordOpen, setChangePasswordOpen] = useState(false)
 
     const {
         activeFilter,
@@ -120,7 +122,14 @@ export function Dashboard() {
 
     return (
         <div className="min-h-screen" style={{ background: "var(--bg)" }}>
-            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+            <Drawer 
+                open={drawerOpen} 
+                onClose={() => setDrawerOpen(false)}
+                onChangePassword={() => setChangePasswordOpen(true)}
+            />
+            <ChangePasswordModal 
+                open={changePasswordOpen} 
+                onClose={() => setChangePasswordOpen(false)} />
 
             <div
                 className="px-4 py-3 flex items-center gap-3"
